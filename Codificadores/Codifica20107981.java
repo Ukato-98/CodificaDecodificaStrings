@@ -3,6 +3,7 @@ package Codificadores;
 public class Codifica20107981 implements Codifica {
 
     private String tabela = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz";
+    private int deslc = 4;
     private int vet[] = new int[62];
 
     @Override
@@ -18,30 +19,43 @@ public class Codifica20107981 implements Codifica {
     @Override
     public String codifica(String str) {
 
-        for (int i = 0; i < 62; i++) {
-            vet[i] = i;
-        }
+        String contrario = new StringBuilder(str).reverse().toString();
 
-        String palavranova = "";
-        for (char s : str.toCharArray()) {
+        String nova = "";
+        for (char s : contrario.toCharArray()) {
             if (!Character.isLetterOrDigit(s)) {
-                palavranova += s;
+                nova += s;
             } else {
                 for (int i = 0; i < tabela.length(); i++) {
                     if (tabela.charAt(i) == s) {
-                        palavranova += "-" + vet[i] + "-";
+                        int pos = Math.floorMod((i + deslc), tabela.length());
+                        nova += tabela.charAt(pos);
                     }
                 }
             }
         }
-
-        return palavranova;
+        return nova;
     }
 
-    @Override
     public String decodifica(String str) {
 
-        return null;
+        String normal = new StringBuilder(str).reverse().toString();
+
+        String velha = "";
+        for (char s : normal.toCharArray()) {
+            if (!Character.isLetterOrDigit(s)) {
+                velha += s;
+            } else {
+                for (int i = 0; i < tabela.length(); i++) {
+                    if (tabela.charAt(i) == s) {
+                        int pos = Math.floorMod((i - deslc), tabela.length());
+                        velha += tabela.charAt(pos);
+                    }
+                }
+            }
+        }
+        return velha;
+
     }
 
 }
