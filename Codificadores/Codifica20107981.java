@@ -4,7 +4,6 @@ public class Codifica20107981 implements Codifica {
 
     private String tabela = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz";
     private int deslc = 4;
-    private int vet[] = new int[62];
 
     @Override
     public String getNomeAutor() {
